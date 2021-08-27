@@ -130,8 +130,19 @@ void setup() {
 
 void loop() {
   if(digitalRead(botao) == 0){
-    digitalWrite(tranca, 1);
-    delay(2000);
+    int btnPress = 0;
+    while(digitalRead(botao) == 0){
+      digitalWrite(tranca, 1);
+      Serial.println("Destravando");
+      delay(1000);
+      Serial.println("Reiniciando em " + String(btnPress) + " de 10s");
+      if(btnPress > 10){
+        
+        ESP.restart();
+      }
+      btnPress++;
+    }
+  }else{
     digitalWrite(tranca, 0);
   }
   if (serverfound) {
